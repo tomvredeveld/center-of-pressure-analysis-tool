@@ -2,7 +2,7 @@
 This Github repository holds a Center of Pressure Analysis tools, which employs clinicians with a webbrowser-based app to calculate frequently used Center of Pressure parameters without knowing about programming languages.
 
 ![Screenshot of the analysis tool](/images/screenshot-gui.png)
-
+*Screenshot of the analysis tool with an uploaded force plate file, showing the center of pressure in mediolateral and anteroposterior directions*
 
 With this tool you can select a segment from data obtained with a force plate (e.g. Wii Balance Board) to calculate Center of Pressure (COP) parameters such as standard deviation of displacement in a certain direction or total sway area. In day-to-day clinical practice, one may want to indicate postural stability by COP parameters, however, without the need to understand programming languages such as MATLAB, Python or R. 
 
@@ -21,11 +21,14 @@ The single `app.R` file can be downloaded from this github page and can be run w
 R: https://cran.rstudio.com
 RStudio: https://posit.co/download/rstudio-desktop/
 
-The app is dependend on a couple of functions from packages which are (freely) available from the CRAN package repository. You can install them in R by running the following single line code: 
+The app depends on a couple of functions from packages which are (freely) available from the CRAN package repository. You can install them in R by running the following single line code: 
 
 `install.packages(c("shiny", "data.table", "signal", "plotly")`
 
 Then open the  `app.R` file and press `Run App` from within RStudio. The steps to using the app are described below. 
+
+![Screenshot of running it local with RStudio](/images/screenshot-using-r.png)
+*Quick instructions to run the app locally on your computer by using R*
 
 ## Using the app
 
