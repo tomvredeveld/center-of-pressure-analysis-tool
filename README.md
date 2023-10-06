@@ -1,7 +1,8 @@
 # Introduction
 This Github repository holds a Center of Pressure Analysis tools, which employs clinicians with a webbrowser-based app to calculate frequently used Center of Pressure parameters without knowing about programming languages.
 
-!Screenshot of the analysis tool](/images/screenshot.png
+![Screenshot of the analysis tool](/images/screenshot-gui.png)
+
 
 With this tool you can select a segment from data obtained with a force plate (e.g. Wii Balance Board) to calculate Center of Pressure (COP) parameters such as standard deviation of displacement in a certain direction or total sway area. In day-to-day clinical practice, one may want to indicate postural stability by COP parameters, however, without the need to understand programming languages such as MATLAB, Python or R. 
 
