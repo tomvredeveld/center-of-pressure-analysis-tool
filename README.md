@@ -41,7 +41,7 @@ At the tab `table` and `plotly` you may find a table displaying the first 6 rows
 ### Step 3: selecting a segment
 Next, you might want to calculate COP parameters from a part of the signal (or complete signal, than use 0 and the highest value as timestamps). You can select a 'timestamp' by hovering your mouse over the plot. This exact value has to be written in the fields next to the figures. A second timestamp depicts the end of the segment. 
 
-### Step 4: COP parameters & Sway area plots
+### Step 4: COP parameters & Sway area / Stabilogram plots
 Now, click the `Calculate COP Parameters` button. Automatically the COP parameters are calculated: including: 
 - Standard deviation of displacement of the COP on the medio-lateral axis (COPx or ML)
 - Standard deviation of displacement of the COP on the anterior-posterior axis (COPy or AP)
@@ -50,7 +50,7 @@ Now, click the `Calculate COP Parameters` button. Automatically the COP paramete
 - Total COP pathlength
 - 95% Predicted Ellipse Area, as described by P. Schuber and M. Kirchner in their [paper](http://dx.doi.org/10.1016/j.gaitpost.2013.09.001)
 
-The 'Sway Area' tab shows two plots, one with COP coordinates and a drawn ellipse, while the second shows, with identical data, the COP path, or: COP trajectory,  viewed from a larger coordinate plane. You can interactively click the figures to drag, zoom, or identify specific data points. Click the 'house' symbol that appears in the right upper corner to return to the original plotted positions of the data.
+The 'Sway Area' tab shows two plots, so called 'stabilograms'. One plot shows the COP coordinates and a drawn ellipse, which corresponds with the COP parameters 95% Predicted Ellipse Area. The second plot shows, with identical data, the COP path, or: COP trajectory,  viewed from a larger coordinate plane. You can interactively click the figures to drag, zoom, or identify specific data points. Click the 'house' symbol that appears in the right upper corner to return to the original plotted positions of the data.
 
 ## Privacy
 Please be aware that uploading your data to the shinyapps.io website does not provide privacy! Be careful when using sensitive data and perhaps choose to run it local on your computer.
