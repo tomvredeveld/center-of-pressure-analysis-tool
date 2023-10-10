@@ -28,7 +28,7 @@ The app depends on a couple of functions from packages which are (freely) availa
 Then open the  `app.R` file and press `Run App` from within RStudio. The steps to using the app are described below. 
 
 ![Screenshot of running it local with RStudio](/images/screenshot-using-r.png)
-*Quick instructions to run the app locally on your computer by using R and Rstudio. *
+*Quick instructions to run the app locally on your computer by using R and Rstudio.*
 
 ## Using the app
 
