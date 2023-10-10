@@ -63,3 +63,5 @@ Version management
 
 ### Issues
 If anything is not working properly in this app, please let me know and add it as an issue or send me an e-mail t.vredeveld [at] hva [dot] nl 
+
+This is a test added by GitHub Desktop
