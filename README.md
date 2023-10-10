@@ -1,12 +1,12 @@
 # Introduction
-This Github repository holds a Center of Pressure Analysis tools, which employs clinicians with a webbrowser-based app to calculate frequently used Center of Pressure parameters without knowing about programming languages.
+This Github repository holds a Center of Pressure Analysis tools, which employs clinicians with a webbrowser-based app to calculate frequently used Center of Pressure parameters without the need to know about programming languages.
 
 ![Screenshot of the analysis tool](/images/screenshot-gui.png)
 *Screenshot of the analysis tool with an uploaded force plate file, showing the center of pressure in mediolateral and anteroposterior directions*
 
-With this tool you can select a segment from data obtained with a force plate (e.g. Wii Balance Board) to calculate Center of Pressure (COP) parameters such as standard deviation of displacement in a certain direction or total sway area. In day-to-day clinical practice, one may want to indicate postural stability by COP parameters, however, without the need to understand programming languages such as MATLAB, Python or R. 
+With this tool you can select a segment from data obtained with a force plate (e.g., AMTI, Kistler, Wii Balance Board) to calculate Center of Pressure (COP) parameters such as standard deviation of displacement in a certain direction or total sway area. In day-to-day clinical practice, one may want to indicate postural stability by COP parameters, however, without the need to understand programming languages such as MATLAB, Python or R. 
 
-This tool enables clinicians to upload a `.txt` or `.csv` file which is than plotted and a segment can be selected by choosing timestamps. Then, frequently used COP parameters can be calculated.
+This tool enables clinicians to upload a `.txt` or `.csv` file which is than plotted and a segment can be selected by choosing timestamps. Then, frequently used COP parameters can be calculated and a COP trajectory (sway) can be viewed.
 
 The tool was developed using the `R` language and `Shiny for R`. More information on R for Shiny can be found at [rstudio.com](https://www.rstudio.com/products/shiny/)
 
@@ -28,7 +28,7 @@ The app depends on a couple of functions from packages which are (freely) availa
 Then open the  `app.R` file and press `Run App` from within RStudio. The steps to using the app are described below. 
 
 ![Screenshot of running it local with RStudio](/images/screenshot-using-r.png)
-*Quick instructions to run the app locally on your computer by using R*
+*Quick instructions to run the app locally on your computer by using R and Rstudio. *
 
 ## Using the app
 
@@ -50,7 +50,7 @@ Now, click the `Calculate COP Parameters` button. Automatically the COP paramete
 - Total COP pathlength
 - 95% Predicted Ellipse Area, as described by P. Schuber and M. Kirchner in their [paper](http://dx.doi.org/10.1016/j.gaitpost.2013.09.001)
 
-The 'Sway Area' tab shows two plots, one with COP coordinates and a drawn ellipse, while the second shows, with identical data, the COP path using a wider range of coordinates.
+The 'Sway Area' tab shows two plots, one with COP coordinates and a drawn ellipse, while the second shows, with identical data, the COP path, or: COP trajectory,  viewed from a larger coordinate plane. You can interactively click the figures to drag, zoom, or identify specific data points. Click the 'house' symbol that appears in the right upper corner to return to the original plotted positions of the data.
 
 ## Privacy
 Please be aware that uploading your data to the shinyapps.io website does not provide privacy! Be careful when using sensitive data and perhaps choose to run it local on your computer.
