@@ -4,9 +4,9 @@ library(data.table)
 library(signal)
 library(plotly)
 
-# Version: 1.0.0 (Beta)
-# Author: T. Vredeveld (github: https://github.com/tomvredeveld)
-# Version management can be found here: 
+# Version: 1.0.0
+# Author: T. Vredeveld (GitHub: https://github.com/tomvredeveld)
+# Version management can be found here: https://github.com/tomvredeveld/center-of-pressure-analysis-tool
 
 ########### UI #################
 ui <- fluidPage(
@@ -26,10 +26,12 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Instructions",
                  br(),
-                 p(strong("Instructions")),
+                 h2("Instructions"),
+                 hr(),
                  p("Here, you will find some instructions to calculate Center of
                  Pressure parameters using this calculator."),
-                 p(strong("Step 1: Upload data")),
+                 h3("Step 1: Upload data"),
+                 hr(),
                  p("First, upload your data as a", code(".txt"), "or", code(".csv"),
                    "file on the left. 
                    Make sure the first three columns in the file are:"),
@@ -41,71 +43,96 @@ ui <- fluidPage(
                  p("The names of the columns do not need to match. Other 
                       columns can be within the file but will be ignored for the calculations. 
                       There is no need to clean up the data yourself."), 
-                 p(strong("Step 2: Look at the signals")), 
+                 h3("Step 2: Look at the signals"), 
+                 hr(),
                  p("Use the tabs above: table, to have a quick look at the data and see if the data was uploaded correctly,
                       plotly, to inspect a mediolateral (upper panel) or anterioposterior (lower pannel) signal."), 
-                 p(strong("Step 3: Segment selection")),
+                 h3("Step 3: Segment selection"),
+                 hr(),
                  p("Hover over either the upper or lower panel of the plots and fill in the values as a 
                     timestamp the sidebar to the left to select a segment of the total signal. The app also
                    calculates the COP parameters if a non-existing timestamp was entered, for example due to a typo.
                    It then selects the nearest available point in time"),
-                 p(strong("Step 4: Press Calculate")),
+                 h3("Step 4: Press Calculate"),
+                 hr(),
                  p("Now you will find a range of COP parameters, reported at the COP parameters tab. 
                    At the tab Sway Area you may find plots that show the postural sway of the individual during the 
                    selected segment."),
         ),
         tabPanel("Table", 
                  br(), 
-                 p(strong("Instructions")),
+                 h2("Instructions"),
+                 hr(),
                  p("Here you can find a table with the first 6 rows of your data, to see if the upload was succesful"),
-                 p(strong("Table")), 
+                 h3("Table"), 
                  tableOutput("table")),
         tabPanel("Plotly", 
                  br(), 
-                 p(strong("Instructions")),
+                 h2("Instructions"),
+                 hr(),
                  p("Beneath you will find a plot of your data, consisting of two panels,
                    the upper being the COP on the x-axis, or medio-lateral movement,
                    while the second panel shows the COP on the y-axis, or anterior-posterior movement"), 
-                 p(strong("Plot")),
+                 h3("Plot"),
+                 hr(),
                  plotlyOutput("plot")),
         tabPanel("CoP Parameters", 
                  br(), 
-                 p(strong("Instructions")),
+                 h2("Instructions"),
+                 hr(),
                  p("The table below shows the output of generic COP parameters of the selected segment from the two
                    timestamps you entered on the left. If no table is shown, please check your timestamps and make sure
                    these are values taken from the Plotly tab, using your mouse to hover over the signals."), 
-                 p(strong("Table of COP parameters of the selected segment")),
+                 h3("Table of COP parameters of the selected segment"),
                  tableOutput("cop_table")),
         tabPanel("Sway Area", 
                  br(), 
-                 p(strong("Instructions")),
+                 h2("Instructions"),
+                 hr(),
                  p("Below, you may find two plots, the left being a 95% Predicted Ellipse Area, layed on top of the data
                    from the segment you selected using the timestamps taken from the Plotly tab you entered on the left.
                    The right plot shows pathlength on a wider coordinated figure including centered x and y lines.
                    If no figures are shown, please check your timestamps and make sure
                    these are values taken from the Plotly tab, using your mouse to hover over the signals."),
-                 p(strong("Plot of Sway Area")),
+                 h3("Plot of Sway Area"),
+                 hr(),
                  splitLayout(cellWidths = c("50%", "50%"), plotlyOutput("sway_area_1"), plotlyOutput("sway_area_2"))),
         tabPanel("About", 
                  br(),
-                 p(strong("About")),
+                 h2("About"),
+                 hr(),
                  p("Author: Tom Vredeveld"),
-                 p(strong("Version")),
+                 h3("Version"),
+                 hr(),
                  p("1.0.0 – First public version"),
                  p("0.1.0 - Private beta"),
-                 p(strong("COP Data filter")),
-                 p("The data is filtered at a 10Hz, using a low-pass zero-lag 4th order Butterworth filter."),
-                 p(strong("Privacy")), 
+                 h3("COP Data filter"),
+                 hr(),
+                 p("The data are filtered at 10Hz, using a low-pass zero-lag 4th order Butterworth filter."),
+                 h3("Disclaimer"),
+                 hr(),
+                 p("The author makes no representations or warranties of any kind,
+                   express or implied, regarding the accuracy, reliability, 
+                   or completeness of any information provided through this 
+                   Center of Pressure Analysis Tool."),
+                 h3("Privacy"),
+                 hr(),
                  p("Please be aware that your data is sent to shinyapps.io as calculations are performed server-side.
-                    Be careful with sensitive data! Otherwise, run the app locally from within RStudio (instructions(url-to-be-updated))."),
-                 p(strong("Licence")),
+                    Be careful with sensitive data! Otherwise, run the app locally from within RStudio
+                   Head for instructions to:"),
+                 a(href = "https://github.com/tomvredeveld/center-of-pressure-analysis-tool",
+                   "https://github.com/tomvredeveld/center-of-pressure-analysis-tool"),
+                 h3("Licence"),
+                 hr(),
                  p("The code of this app is registered under a MIT licence at GitHub (url-to-be-updated)
                     and can be downloaded to run locally from a computer with R and RStudio. 
                     It is provided as a RShiny app, which is hosted for free at shinyapps.io,
                     the downside here being a limited bandwith. 
                     If you wish to frequently use this app, please be adviced to run it locally on your computer.
-                    More info can be found here (url-to-be-updated). 
-                  ")),
+                    More info can be found here."),
+                 a(href = "https://github.com/tomvredeveld/center-of-pressure-analysis-tool",
+                   "https://github.com/tomvredeveld/center-of-pressure-analysis-tool")),
+                 hr(),
       )
     )
   )
@@ -116,7 +143,8 @@ server <- function(input, output) {
   
   ## prerequisites
   # 95% Predicted Area Ellipse calculations
-  # Based off the works from P. Schuber and M. Kirchner 2014. 
+  # Based off the works from P. Schuber and M. Kirchner 2014 (with permission translated to R)
+  # Find code here: https://github.com/tomvredeveld/predicted-ellipse-area 
   # http://dx.doi.org/10.1016/j.gaitpost.2013.09.001
   pea <- function(copx, copy, probability = 0.95){
     
@@ -167,16 +195,16 @@ server <- function(input, output) {
     # Draw plot using ggplot2
     pea$plot1 <- ggplot()+
       geom_point(data = df_xy, aes(x = copx, y = copy), colour = "blue", shape = 3)+
-      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", size = 0.2)+
-      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", size = 0.2)+
+      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
+      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
       theme_classic()
     
     pea$plot2 <- ggplot()+
-      geom_path(data = df_xy, aes(x = copx, y = copy), colour = "blue", size = 0.2)+
-      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", size = 0.2)+
-      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", size = 0.2)+
-      geom_hline(yintercept = 0, colour = "black", size = 0.2)+
-      geom_vline(xintercept = 0, colour = "black", size = 0.2)+
+      geom_path(data = df_xy, aes(x = copx, y = copy), colour = "blue", linewidth = 0.2)+
+      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
+      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
+      geom_hline(yintercept = 0, colour = "black", linewidth = 0.2)+
+      geom_vline(xintercept = 0, colour = "black", linewidth = 0.2)+
       coord_cartesian(xlim = c(-30, 30), ylim = c(-30, 30))+
       theme_classic()
     
