@@ -14,7 +14,11 @@ The tool was developed using the `R` language and `Shiny for R`. More informatio
 The app is developed to run from the shinyapps.io website (through a simple webbrowser) or by running it locally and download the code from this Github repository. Both methods are described below. 
 
 ### Method 1: Shinyapps.io
-The app is published to the shinyapps.io server so it can be used online. You may find it at my personal shinyapps.io account [tomvredeveld.shinyapps.io](https://tomvredeveld.shinyapps.io/center-of-pressure-analysis-tool/) . Please note, due to a limited monthly use at the server, it may be possible that the app is not available. Wait till the next month, or download the app and use it locally on your computer. The steps for using the app are described below.
+The app is published to the shinyapps.io server so it can be used online. You may find it at my personal shinyapps.io account
+
+***Open the web application here: [Center of Pressure Analysis Tool at Shinyapps.IO](https://tomvredeveld.shinyapps.io/center-of-pressure-analysis-tool/).***
+
+Please note, due to a limited monthly use at the server, it may be possible that the app is not available. Wait till the next month, or download the app and use it locally on your computer. The steps for using the app are described below.
 
 ### Method 2: Local use
 The single `app.R` file can be downloaded from this github page and can be run when using R and RStudio. You can install them here:
