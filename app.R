@@ -39,14 +39,14 @@ ui <- fluidPage(
                    "containing a time series"),
                  p(code("copx"),
                    "medio-lateral direction COP data column and"),
-                 p(code("copy"), "anterior-posterior direction COP data column."),
+                 p(code("copy"), "antero-posterior direction COP data column."),
                  p("The names of the columns do not need to match. Other 
                       columns can be within the file but will be ignored for the calculations. 
                       There is no need to clean up the data yourself."), 
                  h3("Step 2: Look at the signals"), 
                  hr(),
                  p("Use the tabs above: table, to have a quick look at the data and see if the data was uploaded correctly,
-                      plotly, to inspect a mediolateral (upper panel) or anterioposterior (lower pannel) signal."), 
+                      plotly, to inspect a medio-lateral (upper panel) or antero-posterior (lower pannel) signal."), 
                  h3("Step 3: Segment selection"),
                  hr(),
                  p("Hover over either the upper or lower panel of the plots and fill in the values as a 
@@ -71,8 +71,8 @@ ui <- fluidPage(
                  h2("Instructions"),
                  hr(),
                  p("Beneath you will find a plot of your data, consisting of two panels,
-                   the upper being the COP on the x-axis, or medio-lateral movement,
-                   while the second panel shows the COP on the y-axis, or anterior-posterior movement"), 
+                   the upper being the COP on the x-axis, or medio-lateral direction,
+                   while the second panel shows the COP on the y-axis, or antero-posterior direction"), 
                  h3("Plot"),
                  hr(),
                  plotlyOutput("plot")),
@@ -249,17 +249,17 @@ server <- function(input, output) {
                      name = "Medio-Lateral COP") %>%
       layout(title = "Center of Pressure Signals & Selection Tool",
              xaxis = list(title = "Time"), #, hoverformat = ".2f"), 
-             yaxis = list(title = "CoP Medio-Lateral", range = c(-25, 25)),
+             yaxis = list(title = "COP Medio-Lateral", range = c(-25, 25)),
              showlegend = TRUE)
     plot2 <- plot_ly(data(), x = ~time, y = ~copy, 
                      type = "scatter",
                      mode = "lines",
                      hoverinfo = "x",
                      line = list(width = 1),
-                     name = "Anterior-Posterior COP") %>%
+                     name = "Antero-Posterior COP") %>%
       layout(title = "Center of Pressure Signals & Selection Tool",
              xaxis = list(title = "Time"), #, hoverformat = ".2f"), 
-             yaxis = list(title = "CoP Anterior-Posterior", range = c(-25, 25)),
+             yaxis = list(title = "COP Anterior-Posterior", range = c(-25, 25)),
              showlegend = TRUE)
     plot <- subplot(plot1, plot2, nrows = 2)
     return(plot)
@@ -306,9 +306,11 @@ server <- function(input, output) {
     
     # Put values in one table to return.
     cop_table <- as.data.frame(matrix(NA, nrow = 6, ncol = 3))
-    names(cop_table) <- c("CoP Parameter", "Value", "Units")
-    cop_parameters <- c("std CoP mediolateral", "std CoP anteroposterior",
-                        "mean velocity CoP mediolateral", "mean velocity CoP anteroposterior",
+    names(cop_table) <- c("COP Parameter", "Value", "Units")
+    cop_parameters <- c("standard deviation of displacement - COP medio-lateral", 
+                        "standard deviation of displacement - COP antero-posterior",
+                        "mean velocity COP medio-lateral", 
+                        "mean velocity CoP antero-posterior",
                         "CoP Pathlength", "CoP 95% PEA")
     cop_table[, 1] <- cop_parameters
     cop_table[, 2] <- c(std_copx, std_copy, mvelo_copx, mvelo_copy, pathlength, segment_pea$area)
