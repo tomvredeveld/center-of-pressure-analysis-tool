@@ -6,9 +6,9 @@ This Github repository holds a Center of Pressure Analysis tools, which employs 
 
 With this tool you can select a segment from data obtained with a force plate (e.g., AMTI, Kistler, Wii Balance Board) to calculate Center of Pressure (COP) parameters such as standard deviation of displacement in a certain direction or total sway area. In day-to-day clinical practice, one may want to indicate postural stability by COP parameters, however, without the need to understand programming languages such as MATLAB, Python or R. 
 
-This tool enables clinicians to upload a `.txt` or `.csv` file which is than plotted and a segment can be selected by choosing timestamps. Then, frequently used COP parameters can be calculated and a COP trajectory (sway) can be viewed.
+This tool enables clinicians to upload a `.txt` or `.csv` file, which is then plotted and a segment can be selected by choosing timestamps. Then, frequently used COP parameters can be calculated and a COP trajectory (sway) can be viewed.
 
-The tool was developed using the `R` language and `Shiny for R`. More information on R for Shiny can be found at [rstudio.com](https://www.rstudio.com/products/shiny/)
+The tool was developed using the `R` language and `Shiny for R`. More information on Shiny for R can be found at [rstudio.com](https://www.rstudio.com/products/shiny/)
 
 ## Getting started.
 The app is developed to run from the shinyapps.io website (through a simple webbrowser) or by running it locally and download the code from this Github repository. Both methods are described below. 
@@ -18,8 +18,9 @@ The app is published to the shinyapps.io server so it can be used online. You ma
 
 ### Method 2: Local use
 The single `app.R` file can be downloaded from this github page and can be run when using R and RStudio. You can install them here:
-R: https://cran.rstudio.com
-RStudio: https://posit.co/download/rstudio-desktop/
+
+- R: https://cran.rstudio.com
+- RStudio: https://posit.co/download/rstudio-desktop/
 
 The app depends on a couple of functions from packages which are (freely) available from the CRAN package repository. You can install them in R by running the following single line code: 
 
@@ -29,7 +30,7 @@ install.packages(c("shiny", "data.table", "signal", "plotly")
 
 Then open the  `app.R` file and press `Run App` from within RStudio. The steps to using the app are described below. 
 
-![Screenshot of running it local with RStudio](/images/screenshot-using-r.png)
+![Screenshot of running the app locally with RStudio](/images/screenshot-using-r.png)
 *Quick instructions to run the app locally on your computer by using R and Rstudio.*
 
 ## Using the app
@@ -54,8 +55,10 @@ Now, click the `Calculate COP Parameters` button. Automatically the COP paramete
 
 The 'Sway Area' tab shows two plots, so called 'stabilograms'. One plot shows the COP coordinates and a drawn ellipse, which corresponds with the COP parameters 95% Predicted Ellipse Area. The second plot shows, with identical data, the COP path, or: COP trajectory,  viewed from a larger coordinate plane. You can interactively click the figures to drag, zoom, or identify specific data points. Click the 'house' symbol that appears in the right upper corner to return to the original plotted positions of the data.
 
-## Privacy
-Please be aware that uploading your data to the shinyapps.io website does not provide privacy! Be careful when using sensitive data and perhaps choose to run it local on your computer.
+## Privacy & Disclaimer
+Please be aware that uploading your data to the web application also shares your data with the servers at shinyapps.io! Be careful when using sensitive data and perhaps choose to run it local on your computer, as I can not guarantee the privacy of your data.
+
+I make no representations or warranties of any kind, express or implied, regarding the accuracy, reliability, or completeness of any information provided through this Center of Pressure Analysis Tool.
 
 ## Version
 Current: 1.0.0 - First public version
@@ -63,5 +66,5 @@ Current: 1.0.0 - First public version
 Version management
 0.1.0 - Personal beta version. 
 
-### Issues
+## Issues
 If anything is not working properly in this app, please let me know and add it as an issue or send me an e-mail t.vredeveld [at] hva [dot] nl 
