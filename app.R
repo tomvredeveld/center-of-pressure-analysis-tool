@@ -27,8 +27,8 @@ ui <- fluidPage(
       
       # Data filter set panel.
       tabsetPanel(h4("Filter Frequency"),
-                  p("If you wish to filter the data, change the frequency below, otherwise, leave the slider at 20 Hz."),
-                  sliderInput(inputId = "get_filter_frequency", label = HTML("<i>Frequency in Hz.</i>"),
+                  p("If you wish to filter the data, you may want to specify the sampling frequency of your measurement, otherwise, leave the slider at 20 Hz."),
+                  sliderInput(inputId = "get_filter_frequency", label = HTML("<i>Sampling frequency in Hz.</i>"),
                               min = 20, max = 1000,
                               value = 20)),
       
@@ -151,7 +151,7 @@ ui <- fluidPage(
                    "https://github.com/tomvredeveld/center-of-pressure-analysis-tool"),
                  h3("Licence"),
                  hr(),
-                 p("The code of this app is registered under a MIT licence at GitHub
+                 p("The code of this app is registered under a GPL-3.0 licence at GitHub
                     and can be downloaded to run locally from a computer with R and RStudio. 
                     It is provided as a RShiny app, which is hosted for free at shinyapps.io,
                     the downside here being a limited bandwith. 
