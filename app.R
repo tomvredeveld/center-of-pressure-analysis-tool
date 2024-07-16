@@ -2,26 +2,52 @@
 library(shiny)
 library(data.table)
 library(signal)
+library(ggplot2)
 library(plotly)
 
-# Version: 1.0.0
+# Version: 1.1.0
 # Author: T. Vredeveld (GitHub: https://github.com/tomvredeveld)
 # Version management can be found here: https://github.com/tomvredeveld/center-of-pressure-analysis-tool
 
 ########### UI #################
 ui <- fluidPage(
+  ## Set labels of input fields to non-bold
+  tags$head(tags$style(HTML("label {font-weight:normal;}"))),
+  
+  ## Create side-panels
   titlePanel("Center of Pressure Analysis Tool"),
   sidebarLayout(
     sidebarPanel(
-      fileInput("file", "Choose CSV or TXT File", accept = c(".csv", ".txt")),
-      numericInput(inputId = "input_timestamp_one",
-                   label = "First timestamp to calculate CoP Parameters",
-                   value = NA, min = 0),
-      numericInput(inputId = "input_timestamp_two",
-                   label = "Second timestamp to calculate CoP Parameters",
-                   value = NA, min = 0),
-      actionButton("go", "Calculate COP Parameters!", class = "btn-primary")
-    ),
+      
+      # Data input panel
+      tabsetPanel(h4("File Upload"),
+                  fileInput(inputId = "file", 
+                            label = HTML("<i>Choose a CSV or TXT file.</i>"),
+                            accept = c(".csv", ".txt"))),
+      
+      # Data filter set panel.
+      tabsetPanel(h4("Filter Frequency"),
+                  p("If you wish to filter the data, change the frequency below, otherwise, leave the slider at 20 Hz."),
+                  sliderInput(inputId = "get_filter_frequency", label = HTML("<i>Frequency in Hz.</i>"),
+                              min = 20, max = 1000,
+                              value = 20)),
+      
+      # Data timestamps for segment & COP calculation
+      tabsetPanel(h4("Segment selection"),
+                  p("If you want to analyze a segment for specific CoP parameters,
+                    please enter two values that show when hovering over the plot in the 'Plotly' tab."),
+                  numericInput(inputId = "input_timestamp_one",
+                               label = HTML("<i>First timestamp to calculate CoP Parameters.</i>"),
+                               value = NA, min = 0),
+                  numericInput(inputId = "input_timestamp_two",
+                               label = HTML("<i>Second timestamp to calculate CoP Parameters.</i>"),
+                               value = NA, min = 0),
+                  br(),
+                  actionButton("getsegment", 
+                               label = "Calculate COP Parameters!", 
+                               class = "btn-primary"))),
+    
+    ## Create mainPanel with tabs and instructions.
     mainPanel(
       tabsetPanel(
         tabPanel("Instructions",
@@ -51,13 +77,13 @@ ui <- fluidPage(
                  hr(),
                  p("Hover over either the upper or lower panel of the plots and fill in the values as a 
                     timestamp the sidebar to the left to select a segment of the total signal. The app also
-                   calculates the COP parameters if a non-existing timestamp was entered, for example due to a typo.
+                   calculates the COP parameters if a non-existing timestamp was entered, for example due to a typing mistake.
                    It then selects the nearest available point in time"),
                  h3("Step 4: Press Calculate"),
                  hr(),
                  p("Now you will find a range of COP parameters, reported at the COP parameters tab. 
                    At the tab Sway Area you may find plots that show the postural sway of the individual during the 
-                   selected segment."),
+                   selected segment. You may adjust the timestamp values at any time"),
         ),
         tabPanel("Table", 
                  br(), 
@@ -104,7 +130,8 @@ ui <- fluidPage(
                  p("Author: Tom Vredeveld"),
                  h3("Version"),
                  hr(),
-                 p("1.0.0 – First public version"),
+                 p("1.1.0 - Extended filter options based on sampling frequency"),
+                 p("1.0.0 - First public version"),
                  p("0.1.0 - Private beta"),
                  h3("COP Data filter"),
                  hr(),
@@ -124,15 +151,15 @@ ui <- fluidPage(
                    "https://github.com/tomvredeveld/center-of-pressure-analysis-tool"),
                  h3("Licence"),
                  hr(),
-                 p("The code of this app is registered under a MIT licence at GitHub (url-to-be-updated)
+                 p("The code of this app is registered under a MIT licence at GitHub
                     and can be downloaded to run locally from a computer with R and RStudio. 
                     It is provided as a RShiny app, which is hosted for free at shinyapps.io,
                     the downside here being a limited bandwith. 
                     If you wish to frequently use this app, please be adviced to run it locally on your computer.
-                    More info can be found here."),
+                    More info can be found here: "),
                  a(href = "https://github.com/tomvredeveld/center-of-pressure-analysis-tool",
                    "https://github.com/tomvredeveld/center-of-pressure-analysis-tool")),
-                 hr(),
+        hr()
       )
     )
   )
@@ -141,11 +168,10 @@ ui <- fluidPage(
 ########### SERVER #################
 server <- function(input, output) {
   
-  ## prerequisites
-  # 95% Predicted Area Ellipse calculations
+  ## 95% Predicted Area Ellipse calculation Function
   # Based off the works from P. Schuber and M. Kirchner 2014 (with permission translated to R)
   # Find code here: https://github.com/tomvredeveld/predicted-ellipse-area 
-  # http://dx.doi.org/10.1016/j.gaitpost.2013.09.001
+  # Source: http://dx.doi.org/10.1016/j.gaitpost.2013.09.001
   pea <- function(copx, copy, probability = 0.95){
     
     # Set up libraries.
@@ -201,8 +227,8 @@ server <- function(input, output) {
     
     pea$plot2 <- ggplot()+
       geom_path(data = df_xy, aes(x = copx, y = copy), colour = "blue", linewidth = 0.2)+
-      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
-      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
+      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", linewidth = 0.1)+
+      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", linewidth = 0.1)+
       geom_hline(yintercept = 0, colour = "black", linewidth = 0.2)+
       geom_vline(xintercept = 0, colour = "black", linewidth = 0.2)+
       coord_cartesian(xlim = c(-30, 30), ylim = c(-30, 30))+
@@ -212,6 +238,7 @@ server <- function(input, output) {
     return(pea)
   } 
   
+  
   ## Load the data by user input.
   data <- reactive({
     req(input$file)
@@ -220,28 +247,44 @@ server <- function(input, output) {
                               col.names = c("time", "copx", "copy"), 
                               skip = 1, 
                               select = c(1:3)))
+    # Add names to table headers
     names(df) <- c("time", "copx", "copy")
-    
-    # Set butterworth filtering.
-    fs_cut <- 10
-    fs_wbb <- 40
-    bf <- butter(2, (fs_cut / (fs_wbb / 2)), type = "low")
-    df[, 2] <- filtfilt(bf, df[, 2])
-    df[, 3] <- filtfilt(bf, df[, 3])
-    
     return(df)
+  })
+  
+  ## Filter the data uploaded given the filter frequency
+  filtered_data <- reactive({
+    if (req(input$get_filter_frequency)){ 
+      # Set data
+      df <- data()
+      
+      # Get the filter frequency from the input field.
+      filter_frequency <- input$get_filter_frequency
+      
+      # Set Butterworth filtering.
+      # Overall, a 4th order low pass bandwith filter with zero-phase at 10 Hz is employed
+      fs_cut <- 10
+      fs <- filter_frequency
+      bf <- butter(2, (fs_cut / (fs / 2)), type = "low")
+      df[, 2] <- filtfilt(bf, df[, 2])
+      df[, 3] <- filtfilt(bf, df[, 3])
+      return(df)
+    } else { 
+      # return unfiltered data if no filter frequency is added
+      df <- data()
+      return(df)}
   })
   
   ## Quicklook table: provides a quick overview if upload/fread was successfully completed.
   output$table <- renderTable({
-    quicklook <- head(data())
+    quicklook <- head(filtered_data())
     return(quicklook)
   })
   
   ## Create a plot to inspect signal. 
   output$plot <- renderPlotly({
     # Plotly settings
-    plot1 <- plot_ly(data(), x = ~time, y = ~copx, 
+    plot1 <- plot_ly(filtered_data(), x = ~time, y = ~copx, 
                      type = "scatter", 
                      mode = "lines",
                      hoverinfo = "x",
@@ -251,7 +294,7 @@ server <- function(input, output) {
              xaxis = list(title = "Time"), #, hoverformat = ".2f"), 
              yaxis = list(title = "COP Medio-Lateral", range = c(-25, 25)),
              showlegend = TRUE)
-    plot2 <- plot_ly(data(), x = ~time, y = ~copy, 
+    plot2 <- plot_ly(filtered_data(), x = ~time, y = ~copy, 
                      type = "scatter",
                      mode = "lines",
                      hoverinfo = "x",
@@ -265,26 +308,25 @@ server <- function(input, output) {
     return(plot)
   })
   
-  # Set timestamp, based on data provided by user.
-  timestamp_one <- eventReactive(input$go, {
-    df <- data()
+  ## Set timestamp, based on data provided by user.
+  timestamp_one <- reactive({
+    df <- filtered_data()
     return(which.min(abs(df[, 1] - input$input_timestamp_one)))})
-    #match(input$input_timestamp_one, df[, 1])})
-  
-  # Set timestamp, based on data provided by user.
-  timestamp_two <- eventReactive(input$go, { 
-    df <- data()
+
+  ## Set timestamp, based on data provided by user.
+  timestamp_two <- reactive({
+    df <- filtered_data()
     return(which.min(abs(df[, 1] - input$input_timestamp_two)))})
-    #match(input$input_timestamp_two, df[, 1])})
-  
-  # Set analysis, based on input. 
-  analysis <- eventReactive(input$go, { 
+
+  ## Set analysis, based on input. 
+  analysis <- reactive({
+    # Set analysis pre-allocation list
     analysis <- list(segment_pea = NULL, cop_table = NULL)
     
-    # Take uploaded data
-    df <- data()
+    # Take filtered data
+    df <- filtered_data()
     
-    # Create segment based on timestamps 
+    # Create segment of the filtered data based on timestamps 
     df_segment <- df[c(timestamp_one():timestamp_two()), ]
     
     # Calculate STD's of displacement
@@ -298,7 +340,7 @@ server <- function(input, output) {
     mvelo_copx <- mean(abs(diff(mcopx)) / time_diff)
     mvelo_copy <- mean(abs(diff(mcopy)) / time_diff)
     
-    # Calculate pathlength by summation of euclidian distances
+    # Calculate COP pathlength by summation of Euclidian distances
     pathlength <- sum(sqrt((diff(mcopx)^2 + diff(mcopy)^2)))
     
     # Calculate 95% PEA
@@ -322,8 +364,7 @@ server <- function(input, output) {
     analysis$segment_pea <- segment_pea
     
     # Return element.
-    return(analysis)
-  })
+    return(analysis)})
   
   ## Output COP parameters table
   output$cop_table <- renderTable({
@@ -335,7 +376,10 @@ server <- function(input, output) {
   output$sway_area_1 <- renderPlotly({
     analysis_data <- analysis()
     segment_pea <- analysis_data$segment_pea
-    plot1 <- ggplotly(segment_pea$plot1)
+    plot1 <- ggplotly(
+      segment_pea$plot1 +
+        labs(x = "COP Medio-Lateral direction", y = "COP Antero-Posterior direction ") +
+        ggtitle("COP 95% Predicted Ellipse Area"))
     return(plot1)
   })
   
@@ -343,7 +387,10 @@ server <- function(input, output) {
   output$sway_area_2 <- renderPlotly({
     analysis_data <- analysis()
     segment_pea <- analysis_data$segment_pea
-    plot2 <- ggplotly(segment_pea$plot2)
+    plot2 <- ggplotly(
+      segment_pea$plot2 +
+        labs(x = "COP Medio-Lateral direction", y = "COP Antero-Posterior direction ") +
+        ggtitle("COP Pathlength"))
     return(plot2)
   })
 }

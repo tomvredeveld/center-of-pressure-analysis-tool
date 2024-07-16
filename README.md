@@ -6,7 +6,9 @@ This Github repository holds a Center of Pressure Analysis tools, which employs 
 
 With this tool you can select a segment from data obtained with a force plate (e.g., AMTI, Kistler, Wii Balance Board) to calculate Center of Pressure (COP) parameters such as standard deviation of displacement in a certain direction or total sway area. In day-to-day clinical practice, one may want to indicate postural stability by COP parameters, however, without the need to understand programming languages such as MATLAB, Python or R. 
 
-This tool enables clinicians to upload a `.txt` or `.csv` file, which is then plotted and a segment can be selected by choosing timestamps. Then, frequently used COP parameters can be calculated and a COP trajectory (sway) can be viewed.
+Specifically, this tool is designed to work in close cooperation with the [Wii Balance Recorder app](https://github.com/tomvredeveld/wii-balance-board-recorder), as the .txt files it generates can be imported in this analysis tool without any further modifications needed.
+
+This tool enables users to upload a `.txt` or `.csv` file, which is then plotted and a segment can be selected by choosing timestamps. Then, frequently used COP parameters can be calculated and a COP trajectory (sway) can be viewed.
 
 The tool was developed using the `R` language and `Shiny for R`. More information on Shiny for R can be found at [rstudio.com](https://www.rstudio.com/products/shiny/)
 
@@ -65,10 +67,13 @@ Please be aware that uploading your data to the web application also shares your
 I make no representations or warranties of any kind, express or implied, regarding the accuracy, reliability, or completeness of any information provided through this Center of Pressure Analysis Tool.
 
 ## Version
-Current: 1.0.0 - First public version
+Current: 1.1.0
 
 Version management
-0.1.0 - Personal beta version. 
+
+- 1.1.0 - Added custom filter frequency.
+- 1.0.0 - First public version.  
+- 0.1.0 - Personal beta version. 
 
 ## Issues
 If anything is not working properly in this app, please let me know and add it as an issue or send me an e-mail t.vredeveld [at] hva [dot] nl 
