@@ -5,7 +5,7 @@ library(signal)
 library(ggplot2)
 library(plotly)
 
-# Version: 1.1.0
+# Version: 1.1.1
 # Author: T. Vredeveld (GitHub: https://github.com/tomvredeveld)
 # Version management can be found here: https://github.com/tomvredeveld/center-of-pressure-analysis-tool
 
@@ -98,7 +98,7 @@ ui <- fluidPage(
                  hr(),
                  p("Beneath you will find a plot of your data, consisting of two panels,
                    the upper being the COP on the x-axis, or medio-lateral direction,
-                   while the second panel shows the COP on the y-axis, or antero-posterior direction"), 
+                   while the second panel shows the COP on the y-axis, or antero-posterior direction."), 
                  h3("Plot"),
                  hr(),
                  plotlyOutput("plot")),
@@ -130,6 +130,7 @@ ui <- fluidPage(
                  p("Author: Tom Vredeveld"),
                  h3("Version"),
                  hr(),
+                 p("1.1.1 - Changed colours to match RColorBrewer distinctive colours and fixed some grammatical errors"),
                  p("1.1.0 - Extended filter options based on sampling frequency"),
                  p("1.0.0 - First public version"),
                  p("0.1.0 - Private beta"),
@@ -220,15 +221,15 @@ server <- function(input, output) {
     
     # Draw plot using ggplot2
     pea$plot1 <- ggplot()+
-      geom_point(data = df_xy, aes(x = copx, y = copy), colour = "blue", shape = 3)+
-      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
-      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", linewidth = 0.2)+
+      geom_point(data = df_xy, aes(x = copx, y = copy), colour = "#2c7bb6", shape = 3)+
+      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "#d7191c", linewidth = 0.2)+
+      geom_path(data = df_axis, aes(x = x, y = y), colour = "#d7191c", linewidth = 0.2)+
       theme_classic()
     
     pea$plot2 <- ggplot()+
-      geom_path(data = df_xy, aes(x = copx, y = copy), colour = "blue", linewidth = 0.2)+
-      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "red", linewidth = 0.1)+
-      geom_path(data = df_axis, aes(x = x, y = y), colour = "red", linewidth = 0.1)+
+      geom_path(data = df_xy, aes(x = copx, y = copy), colour = "#2c7bb6", linewidth = 0.2)+
+      geom_path(data = df_ellipse, aes(x = x, y = y), colour = "#d7191c", linewidth = 0.1)+
+      geom_path(data = df_axis, aes(x = x, y = y), colour = "#d7191c", linewidth = 0.1)+
       geom_hline(yintercept = 0, colour = "black", linewidth = 0.2)+
       geom_vline(xintercept = 0, colour = "black", linewidth = 0.2)+
       coord_cartesian(xlim = c(-30, 30), ylim = c(-30, 30))+
@@ -288,7 +289,7 @@ server <- function(input, output) {
                      type = "scatter", 
                      mode = "lines",
                      hoverinfo = "x",
-                     line = list(width = 1),
+                     line = list(width = 1, color = "#2c7bb6"),
                      name = "Medio-Lateral COP") %>%
       layout(title = "Center of Pressure Signals & Selection Tool",
              xaxis = list(title = "Time"), #, hoverformat = ".2f"), 
@@ -298,13 +299,13 @@ server <- function(input, output) {
                      type = "scatter",
                      mode = "lines",
                      hoverinfo = "x",
-                     line = list(width = 1),
+                     line = list(width = 1, color = "#d7191c"),
                      name = "Antero-Posterior COP") %>%
       layout(title = "Center of Pressure Signals & Selection Tool",
              xaxis = list(title = "Time"), #, hoverformat = ".2f"), 
              yaxis = list(title = "COP Anterior-Posterior", range = c(-25, 25)),
              showlegend = TRUE)
-    plot <- subplot(plot1, plot2, nrows = 2)
+    plot <- subplot(plot1, plot2, nrows = 2, titleX = FALSE)
     return(plot)
   })
   
